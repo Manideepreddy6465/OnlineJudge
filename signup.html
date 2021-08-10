@@ -1,0 +1,254 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<style>  
+body
+{  
+background-color: ash;  
+}  
+.container {  
+    padding: 50px;  
+  background-color: lightgrey;  
+}
+input[type=text],input[type=password],input[type=email],textarea
+{  
+  width:100%;  
+  padding: 15px;  
+  margin: 5px 0 22px 0;  
+  display: inline-block;  
+  border: none;  
+  background: #f1f1f1;  
+}
+input[type=text]:focus, input[type=password]:focus
+{ 
+ 
+  background-color: coral;  
+  outline: none;  
+}    
+div 
+{  
+   padding: 10px 0;  
+}  
+hr {  
+  border: 1px solid #f1f1f1;  
+  margin-bottom: 25px;  
+}  
+.registerbtn {  
+  background-color: white;  
+  color: black;  
+  padding: 16px 20px;  
+  margin: 8px 0;  
+  border: none;  
+  cursor: pointer;   
+  opacity: 0.4;  
+}  
+.registerbtn:hover {  
+  opacity: 1;  
+  transition: all 0.5s ease;
+}  
+</style>  
+</head>  
+<body>  
+  <form>  
+    <div class="container">  
+    <center>  <h1> Student Registeration Form</h1> </center>  
+    <hr> 
+  <label>Email ID</label>
+  <input type="email" name="email"  id="email1" placeholder= "Vardhaman Mail Id" size="15" required/>
+  <label> Name :</label>   
+  <center><input type="text" name="name" id="nme1" placeholder= "Name" size="15" required /></center>
+  <label> Rollno</label>
+  <center><input type="text" name="rno" id="rno1" placeholder= "Rollno" size="15" required /></center>   
+  <label> Codechef Username : </label>   
+  <center><input type="text" name="cdchef" id="cdname" placeholder="Codechef Username" size="15" required /></center>
+  <!--<label for="pwd">CodeChefPassword:</label>
+  <input type="password" id="pwd" name="pwd"><br><br>-->
+  <label> Codeforces Username : </label>   
+  <center><input type="text" name="cdfor" id="cfname" placeholder="Codeforces Username" size="15" required /></center>
+  <!--<label for="pad">HackerRankPassword:</label>
+  <input type="password" id="pad" name="pad"><br><br>-->
+  <label> InterviewBit Username : </label>   
+  <center><input type="text" name="intbit" id="ibname" placeholder="InterviewBit Username" size="15" required /></center>
+  <!--<label for="pod">HackerEarth Password:</label>
+  <input type="password" id="pod" name="pod"><br><br>-->
+  <label> Spoj Username : </label>   
+  <center><input type="text" name="spoj" id="spjname" placeholder="Spoj Username" size="15" required /></center>
+  <!--<label for="pad">HackerRankPassword:</label>
+  <input type="password" id="pad" name="pad"><br><br>-->
+  <label> Passing Out Year : </label>       
+  <input type="number" name="Passedout Year" id="pyear" placaeholder="Year of Passing" size="15"required />
+  <div>  
+  <label> Branch :</label>   
+  <select id="br">  
+  <option value="Branch">Branch</option>  
+  <option value="CSE">CSE</option>  
+  <option value="IT">IT</option>  
+  <option value="ECE">ECE</option>  
+  <option value="EEE">EEE</option>  
+  <option value="MECH">MECH</option>  
+  <option value="CIVIL">CIVIL</option>  
+  </select>  
+  </div>  
+  <label> Password </label>
+  <center><input type="password" id="pass" name="pasw" size="15" required></center>
+  <center>      
+  <button type="submit" class="registerbtn" id="signBtn">Submit</button>  
+  </center>
+  </div>   
+  </form>  
+
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyCTMjPm5ViOxFsNphDpQdUbuofgN6wnOcs",
+      authDomain: "performance-track.firebaseapp.com",
+      projectId: "performance-track",
+      storageBucket: "performance-track.appspot.com",
+      messagingSenderId: "344552921121",
+      appId: "1:344552921121:web:7d9f9a42d1821587422b60",
+      measurementId: "G-Z722ZE1EGQ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+  <!--<script src="funbase.js"></script>-->
+
+
+  <script>
+    const emailId = document.getElementById("email1");
+    const brname=document.getElementById("br");
+    const rolln = document.getElementById("rno1");
+    const fname = document.getElementById("nme1");
+    const cdnme = document.getElementById("cdname");
+    const cfnme = document.getElementById("cfname");
+    const ibnme = document.getElementById("ibname");
+    const spjnme = document.getElementById("spjname");
+    const pyear = document.getElementById("pyear");
+    const pasw = document.getElementById("pass");
+    const signBtn = document.getElementById("signBtn");
+    signBtn.addEventListener('click',(e) => {
+        e.preventDefault();
+
+        var re=0;
+        var total=0;
+        const db = firebase.database();
+        db.ref('/student/'+ rolln.value).set({
+            email: emailId.value,
+            name : fname.value,
+            cdname: cdnme.value,
+            branch: brname.value,
+            rollno : rolln.value,
+            cfname: cfnme.value,
+            ibname: ibnme.value,
+            spjname:spjnme.value,
+            passyear: pyear.value,
+            password: pasw.value
+        }).then(()=>{
+          interviewbit(ibnme.value);
+          codefor(cfnme.value);
+          codech(cdname.value);
+          spoj(spjnme.value);
+        });
+        function interviewbit(first) // return interviewbit score
+        {
+            
+            let url = "https://competitive-coding-api.herokuapp.com/api/interviewbit/"+first;
+            fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                var Rating= out["score"];
+                re=Rating/3;
+                total+=Math.round(re);
+            })
+            .then(()=>{
+              const db = firebase.database();
+              db.ref('/student/'+ rolln.value).update({
+                 scoreA:Math.round(re),
+              }      
+            ).catch(err => { console.log(err)});
+          });
+        }
+        function codefor(first) //returns codeforce score
+        {   var score;
+            let url = "https://competitive-coding-api.herokuapp.com/api/codeforces/"+first;
+            fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                var Rating= JSON.stringify(out.rating);
+                var Rat = parseInt(Rating);
+                score = Math.round(((Rat-1200)*(Rat-1200))/30); 
+                total+=Math.round(score);
+            })
+            .then(()=>{
+              const db = firebase.database();
+              db.ref('/student/'+ rolln.value).update({
+                 scoreB:score,
+              }      
+            )
+            }).catch(err => { console.log(err)});           
+        }
+        function codech(first) //returns codechef score 
+        {
+            var res;
+            let url = "https://competitive-coding-api.herokuapp.com/api/codechef/"+first;
+            fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                var a = JSON.stringify(out.rating);
+                var b = JSON.stringify(out.fully_solved.count);
+                var Rating = parseInt(a);
+                var Ps = parseInt(b);
+            
+                //document.writeln(Rating);
+                //document.writeln(Ps);
+                res = Math.round(( Ps * 10 + ((Rating-1300)*(Rating-1300)) / 30));
+                total+=Math.round(res);
+            })
+            .then(()=>{
+              const db = firebase.database();
+              db.ref('/student/'+ rolln.value).update({
+                 scoreC:res,
+              }      
+            )
+            })
+            .catch(err => { console.log(err)});
+        }
+        function spoj(first) // returns spoj score
+        {
+            var res;
+            let url = "https://competitive-coding-api.herokuapp.com/api/spoj/"+first;
+            fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                var ps = JSON.stringify(out.solved.length);// ps =problems solved
+                var points = JSON.stringify(out.points);
+                res = Math.round((points*10) + (ps *10));
+                total+=Math.round(res);
+            })
+            .then(()=>{
+              const db = firebase.database();
+              db.ref('/student/'+ rolln.value).update({
+                 scoreD:res,
+                 OverallScore:total,
+              }      
+            )
+            })
+            .catch(err => { console.log(err)});
+        }   
+
+    });
+  </script>
+</body>  
+</html>

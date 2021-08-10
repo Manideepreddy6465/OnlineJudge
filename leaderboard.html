@@ -1,0 +1,130 @@
+<html>
+<head>
+<style>
+table,th,tr,td{
+      border: 1px solid black;
+	  }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-analytics.js"></script>
+    <script>  
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyCTMjPm5ViOxFsNphDpQdUbuofgN6wnOcs",
+        authDomain: "performance-track.firebaseapp.com",
+        projectId: "performance-track",
+        storageBucket: "performance-track.appspot.com",
+        messagingSenderId: "344552921121",
+        appId: "1:344552921121:web:7d9f9a42d1821587422b60",
+        measurementId: "G-Z722ZE1EGQ"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+    <h2 style="border:solid;background-color:red; text-align:center;">Student Wise Performance</h2>
+
+
+<h4 style="border:solid; text-align:center;"> Top 10 Performers</h4>
+<table style="width:100%; border: 1px solid black;">
+<tr style=" border: 1px solid black;">
+	<th>
+        name
+    </th>
+    <th>
+        Codechef
+    </th>
+    <th>
+        Codeforces
+    </th>
+    <th>
+        Interviewbit
+	</th>
+	<th>
+	    Spoj
+	</th>
+	<th>
+	    Total
+	</th>
+</tr>
+<tbody id="demo"></tbody>
+   <script>
+       //const db = firebase.database();
+       //const rootRef = database.ref();
+       var playersRef = firebase.database().ref("student/");
+       var st;
+       var r=new Array();
+       var cc=new Array();
+       var cf=new Array();
+       var ib=new Array();
+       var sj=new Array();
+       var tot=new Array();
+       var tbody=document.getElementById("demo");
+       var ref = firebase.database().ref("student");
+           ref.once("value")
+       .then(function(snapshot) {
+       st= snapshot.numChildren(); 
+       console.log(st);
+     }).then(()=>{
+       playersRef.on("child_added", function(data) {
+       r.push(data.val().name);
+       cc.push(data.val().scoreC);
+       cf.push(data.val().scoreB);
+       ib.push(data.val().scoreA);
+       sj.push(data.val().scoreD);
+       tot.push(data.val().OverallScore);
+       if(st==r.length)
+       {
+         values();  
+       } 
+       else
+       {
+         console.log(r.length);  
+       }
+   });
+     });
+       
+      
+       function values()
+       {    
+           console.log(r.length);
+           r.reverse();
+           cc.reverse();
+           cf.reverse();
+           ib.reverse();
+           sj.reverse();
+           tot.reverse();
+           for (var i=0; i<r.length && i<10; i++) {
+               var trow=document.createElement("tr");
+               var tdname=document.createElement("td");
+               var tdcc=document.createElement("td");
+               var tdcf=document.createElement("td");
+               var tdib=document.createElement("td");
+               var tdsj=document.createElement("td");
+               var tdtot=document.createElement("td");
+               tdname.innerHTML=r[i];
+               tdcc.innerHTML=cc[i];
+               tdcf.innerHTML=cf[i];
+               tdib.innerHTML=ib[i];
+               tdsj.innerHTML=sj[i];
+               tdtot.innerHTML=tot[i];
+               trow.appendChild(tdname);
+               trow.appendChild(tdcc);
+               trow.appendChild(tdcf);
+               trow.appendChild(tdib);
+               trow.appendChild(tdsj);
+               trow.appendChild(tdtot);
+               tbody.appendChild(trow);
+            }   
+       }
+   </script>    
+</table>
+</body>
+</html>

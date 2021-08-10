@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<title> SignUp Form</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+
+</head>
+<body>
+	<div class="main-w3layouts wrapper">
+		<h1>SignUp Form</h1>
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+				<form action="#" method="post">
+					<input class="text" type="text" name="Username" placeholder="Username" required id="uname">
+					<input class="text email" type="email" name="email" placeholder="Email" required id="email">
+					<input class="text" type="password" name="password" placeholder="Password" required id="pass">
+					<input type="submit" value="SIGNUP" id="admBtn">
+				</form>
+				<p> <a href="adminlogin.html"> Login Now!</a></p>
+			</div>
+		</div>
+	
+		<ul class="colorlib-bubbles">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	<!-- //main -->
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+  
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+		https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-analytics.js"></script>
+  
+	<script>
+	  // Your web app's Firebase configuration
+	  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	  var firebaseConfig = {
+		apiKey: "AIzaSyCTMjPm5ViOxFsNphDpQdUbuofgN6wnOcs",
+		authDomain: "performance-track.firebaseapp.com",
+		projectId: "performance-track",
+		storageBucket: "performance-track.appspot.com",
+		messagingSenderId: "344552921121",
+		appId: "1:344552921121:web:7d9f9a42d1821587422b60",
+		measurementId: "G-Z722ZE1EGQ"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+	  firebase.analytics();
+	</script>
+
+	<script>
+		const uname = document.getElementById("uname");
+		const email = document.getElementById("email");
+		const pass = document.getElementById("pass");
+		const admBtn = document.getElementById("admBtn");
+
+		const database = firebase.database();
+
+		admBtn.addEventListener('click',(e) => {
+			e.preventDefault();
+			database.ref('/admin/'+uname.value).set({
+				username: uname.value,
+				emailid: email.value,
+				password: pass.value 
+			});
+			window.onload();
+		});
+
+
+	</script>
+</body>
+</html>

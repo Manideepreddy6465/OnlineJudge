@@ -1,0 +1,135 @@
+<html>
+<head>
+<style>
+table,th,tr,td{
+      border: 1px solid black;
+	  }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-analytics.js"></script>
+    <script>  
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyCTMjPm5ViOxFsNphDpQdUbuofgN6wnOcs",
+        authDomain: "performance-track.firebaseapp.com",
+        projectId: "performance-track",
+        storageBucket: "performance-track.appspot.com",
+        messagingSenderId: "344552921121",
+        appId: "1:344552921121:web:7d9f9a42d1821587422b60",
+        measurementId: "G-Z722ZE1EGQ"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>    
+<h2 style="border:solid;background-color:coral; text-align:center;">InterviewBit</h2>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+       
+        <li class="nav-item">
+          <a class="nav-link" href="adminhome.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  " href="codechef.html">Codechef</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="codeforces.html">Codeforces</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="interviewbit.html"> Interviewbit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="spoj.html">Spoj</a>
+        </li>
+		<li class="nav-item">
+            <a class="nav-link" href="studentwiseperformance.html">Student Wise Performance</a>
+        </li>
+		<li class="nav-item">
+            <a class="nav-link" href="passoutyearwise.html">Passout Year Wise Performance</a>
+        </li>
+		<li class="nav-item">
+            <a class="nav-link" href="blockuser.html">Block User</a>
+        </li>
+		<li class="nav-item">
+            <a class="nav-link" href="email.html">Email User</a>
+        </li>
+		<li class="nav-item">
+            <a class="nav-link" href="#">update</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <a class="nav-link" href="mainhome.html">Logout</a>
+      </form>
+	  </div>
+	  </nav>
+
+<h4 style="border:solid; text-align:center;"> Top 10 Performers</h4>
+<table style="width:100%; border: 1px solid black;">
+<tr style=" border: 1px solid black;">
+    <th>
+        Username
+    </th>
+    <th>
+        Score
+    </th>
+   </tr>
+   <tbody id="demo"></tbody>
+   <script>
+       //const db = firebase.database();
+       //const rootRef = database.ref();
+       var playersRef = firebase.database().ref("student/");
+       var st;
+       var r=new Array();
+       var s=new Array();
+       var tbody=document.getElementById("demo");
+       var ref = firebase.database().ref("student");
+           ref.once("value")
+       .then(function(snapshot) {
+       st= snapshot.numChildren(); 
+       console.log(st);
+     }).then(()=>{
+       playersRef.orderByChild("scoreA").on("child_added", function(data) {
+       r.push(data.val().rollno);
+       s.push(data.val().scoreA);  
+       if(st==r.length)
+       {
+         values();  
+       } 
+       else
+       {
+         console.log(r.length+"sasjii");  
+       }
+   });
+     });
+       
+      
+       function values()
+       {    
+           console.log(s.length);
+           console.log(r.length);
+           r.reverse();
+           s.reverse();
+           for (var i=0; i<r.length && i<10; i++) {
+               var trow=document.createElement("tr");
+               var tdname=document.createElement("td");
+               var tdscore=document.createElement("td");
+               tdname.innerHTML=r[i];
+               tdscore.innerHTML=s[i];
+               trow.appendChild(tdname);
+               trow.appendChild(tdscore);
+               tbody.appendChild(trow);
+       }  
+       }
+   </script>    
+</table>
+</body>
+</html>
